@@ -1,0 +1,121 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+
+/*
+ * Design system definition.
+ *
+ * The @theme inline block maps CSS custom properties to Tailwind utility
+ * classes (e.g. --color-primary -> bg-primary, text-primary).
+ *
+ * The :root and .dark blocks define the actual color values using oklch.
+ * All colors MUST use oklch format.
+ *
+ * To add a new semantic color:
+ * 1. Add the variable to :root (light value) and .dark (dark value)
+ * 2. Register it in @theme inline as --color-<name>: var(--<name>)
+ */
+
+
+
+:root {
+  --radius: 1rem;
+  --background: oklch(0.975 0.006 264);
+  --foreground: oklch(0.23 0.04 265);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.23 0.04 265);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.23 0.04 265);
+  --primary: oklch(0.55 0.216 263);
+  --primary-foreground: oklch(0.99 0.005 260);
+  --primary-soft: oklch(0.94 0.035 264);
+  --secondary: oklch(0.96 0.012 260);
+  --secondary-foreground: oklch(0.3 0.04 265);
+  --muted: oklch(0.965 0.008 260);
+  --muted-foreground: oklch(0.56 0.03 262);
+  --accent: oklch(0.94 0.035 264);
+  --accent-foreground: oklch(0.4 0.14 264);
+  --destructive: oklch(0.6 0.22 25);
+  --destructive-foreground: oklch(0.99 0.005 260);
+  --success: oklch(0.68 0.16 158);
+  --warning: oklch(0.78 0.15 78);
+  --border: oklch(0.925 0.012 258);
+  --input: oklch(0.925 0.012 258);
+  --ring: oklch(0.55 0.216 263);
+  --chart-1: oklch(0.55 0.216 263);
+  --chart-2: oklch(0.68 0.16 158);
+  --chart-3: oklch(0.78 0.15 78);
+  --chart-4: oklch(0.62 0.2 300);
+  --chart-5: oklch(0.65 0.19 20);
+  --sidebar: oklch(1 0 0);
+  --sidebar-foreground: oklch(0.3 0.04 265);
+  --sidebar-primary: oklch(0.55 0.216 263);
+  --sidebar-primary-foreground: oklch(0.99 0.005 260);
+  --sidebar-accent: oklch(0.94 0.035 264);
+  --sidebar-accent-foreground: oklch(0.4 0.14 264);
+  --sidebar-border: oklch(0.93 0.012 258);
+  --sidebar-ring: oklch(0.55 0.216 263);
+  --gradient-hero: linear-gradient(120deg, oklch(0.93 0.045 262), oklch(0.9 0.06 280) 55%, oklch(0.95 0.03 240));
+  --gradient-primary: linear-gradient(135deg, oklch(0.55 0.216 263), oklch(0.62 0.19 285));
+  --shadow-card: 0 1px 2px oklch(0.4 0.05 265 / 0.04), 0 12px 32px -18px oklch(0.4 0.08 265 / 0.35);
+  --shadow-float: 0 8px 40px -12px oklch(0.4 0.08 265 / 0.28);
+}
+
+
+.dark {
+  --background: oklch(0.17 0.028 265);
+  --foreground: oklch(0.97 0.006 250);
+  --card: oklch(0.22 0.03 265);
+  --card-foreground: oklch(0.97 0.006 250);
+  --popover: oklch(0.22 0.03 265);
+  --popover-foreground: oklch(0.97 0.006 250);
+  --primary: oklch(0.65 0.19 265);
+  --primary-foreground: oklch(0.15 0.03 265);
+  --primary-soft: oklch(0.3 0.06 265);
+  --secondary: oklch(0.27 0.032 262);
+  --secondary-foreground: oklch(0.96 0.006 250);
+  --muted: oklch(0.26 0.03 262);
+  --muted-foreground: oklch(0.72 0.03 258);
+  --accent: oklch(0.3 0.06 265);
+  --accent-foreground: oklch(0.88 0.07 265);
+  --destructive: oklch(0.65 0.2 25);
+  --destructive-foreground: oklch(0.98 0.005 250);
+  --success: oklch(0.7 0.15 158);
+  --warning: oklch(0.8 0.14 78);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 14%);
+  --ring: oklch(0.65 0.19 265);
+  --chart-1: oklch(0.65 0.19 265);
+  --chart-2: oklch(0.7 0.15 158);
+  --chart-3: oklch(0.8 0.14 78);
+  --chart-4: oklch(0.68 0.19 300);
+  --chart-5: oklch(0.68 0.18 20);
+  --sidebar: oklch(0.22 0.03 265);
+  --sidebar-foreground: oklch(0.95 0.006 250);
+  --sidebar-primary: oklch(0.65 0.19 265);
+  --sidebar-primary-foreground: oklch(0.15 0.03 265);
+  --sidebar-accent: oklch(0.3 0.06 265);
+  --sidebar-accent-foreground: oklch(0.9 0.06 265);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.65 0.19 265);
+  --gradient-hero: linear-gradient(120deg, oklch(0.3 0.07 265), oklch(0.32 0.08 285) 55%, oklch(0.26 0.05 250));
+  --gradient-primary: linear-gradient(135deg, oklch(0.6 0.2 263), oklch(0.66 0.18 288));
+  --shadow-card: 0 1px 2px oklch(0 0 0 / 0.3), 0 14px 34px -20px oklch(0 0 0 / 0.7);
+  --shadow-float: 0 10px 44px -14px oklch(0 0 0 / 0.6);
+}
+
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+  }
+}
+.button {
+  background-color: var(blue);
+  padding: var(--spacing-sm);
+}
