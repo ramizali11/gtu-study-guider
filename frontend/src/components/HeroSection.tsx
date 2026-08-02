@@ -30,14 +30,14 @@ export function HeroSection() {
         <div className="mt-5 flex flex-wrap gap-3 dark:text-white">
           <button
             type="button"
-            className="inline-flex items-center gap-2 rounded-xl bg-gradient-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-card transition-transform hover:-translate-y-0.5 ring bg-primary"
+            className=" inline-flex items-center gap-2 rounded-xl bg-gradient-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-card transition-transform hover:-translate-y-0.5 ring bg-color-primary"
           >
             Start Studying
             <ArrowRight className="size-4" aria-hidden="true" />
           </button>
           <button
             type="button"
-            className="text-primary inline-flex items-center rounded-xl border border-border bg-card px-5 py-2.5 text-sm font-semibold text-foreground transition-colors hover:bg-accent color: red-foreground bg-sky-500"
+            className="text-white inline-flex items-center rounded-xl border border-border bg-card px-5 py-2.5 text-sm font-semibold text-foreground transition-colors hover:bg-accent color: red-foreground bg-primary"
           >
             Continue Learning
           </button>

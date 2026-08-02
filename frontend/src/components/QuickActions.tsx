@@ -83,7 +83,7 @@ export function QuickActions({ activeId = "ai-chat", onSelect }: QuickActionsPro
             whileHover={{ y: -4 }}
             className={cn(
               "group flex h-full flex-col rounded-2xl border bg-card p-4 shadow-card transition-colors",
-              isActive ? "border-primary/40 bg-primary-soft/40" : "border-border hover:border-primary/30",
+              isActive  ? "border-sidebar-forground/40 bg-primary-soft/40 hover:border-primary" : "border-border hover:border-primary",
             )}
           >
             <div className="flex min-w-0 items-start gap-3">
