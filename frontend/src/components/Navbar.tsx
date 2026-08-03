@@ -10,7 +10,9 @@ interface NavbarProps {
   onOpenSidebar?: () => void;
 }
 
-export function Navbar({ userName = "Ramiz", onOpenSidebar }: NavbarProps) {
+export function Navbar({onOpenSidebar}: NavbarProps) {
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
+  const userName = user.name || "Guest";
   const hour = new Date().getHours();
   const greeting = hour < 12 ? "Good Morning" : hour < 17 ? "Good Afternoon" : "Good Evening";
 

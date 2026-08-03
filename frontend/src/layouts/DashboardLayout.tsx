@@ -1,5 +1,6 @@
 import { useState, type ReactNode } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 import { Navbar } from "../components/Navbar";
 import { Sidebar } from "../components/Sidebar";
@@ -8,15 +9,31 @@ interface DashboardLayoutProps {
   children: ReactNode;
 }
 
+
+
+
 export function DashboardLayout({ children }: DashboardLayoutProps) {
+  const navigate = useNavigate();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeItem, setActiveItem] = useState("dashboard");
+  const handleSidebarNavigation = (id: string) => {
+    if (id === "logout") {
+   
+      localStorage.removeItem("token");
+  
+      navigate("/login", { replace: true });
+
+      return;
+    }
+  
+    setActiveItem(id);
+  };
 
   return (
     <div className="min-h-screen bg-slate-950 text-white">
-      <div className="mx-auto flex max-w-[1500px] gap-6 p-4 sm:p-6 ">
+      <div className="mx-auto flex max-w-375 gap-6 p-4 sm:p-6 ">
         <div className="sticky top-6 hidden h-[calc(100vh-3rem)] shrink-0 lg:block ">
-          <Sidebar activeItem={activeItem} onNavigate={setActiveItem} />
+          <Sidebar activeItem={activeItem} onNavigate={handleSidebarNavigation} />
         </div>
 
         <AnimatePresence>

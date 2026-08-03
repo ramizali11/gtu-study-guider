@@ -9,6 +9,11 @@
 
     /* Bundler mode */
     "moduleResolution": "Bundler",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    },
+    "ignoreDeprecations": "6.0",
     "allowImportingTsExtensions": true,
     "isolatedModules": true,
     "moduleDetection": "force",

@@ -37,7 +37,7 @@ export function HeroSection() {
           </button>
           <button
             type="button"
-            className="text-white inline-flex items-center rounded-xl border border-border bg-card px-5 py-2.5 text-sm font-semibold text-foreground transition-colors hover:bg-accent color: red-foreground bg-primary"
+            className="inline-flex items-center rounded-xl border border-border bg-card px-5 py-2.5 text-sm font-semibold text-foreground transition-colors hover:bg-accent"
           >
             Continue Learning
           </button>

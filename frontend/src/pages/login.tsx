@@ -25,6 +25,7 @@ function Login() {
         password,
       });
 
+      localStorage.setItem("user", JSON.stringify(response.data.user));
       localStorage.setItem("token", response.data.access_token);
 
       // Go directly to the dashboard
@@ -64,7 +65,9 @@ function Login() {
             />
           </div>
 
-          <label className="mt-5 block font-semibold text-white">Password</label>
+          <label className="mt-5 block font-semibold text-white">
+            Password
+          </label>
 
           <div className="mt-2 flex items-center rounded-lg border border-slate-700 bg-slate-800/70 px-3 py-3">
             <FiLock className="text-xl text-slate-400" />
