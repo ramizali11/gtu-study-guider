@@ -53,20 +53,20 @@ function Papers() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 flex justify-center items-center">
-      <div className="w-full max-w-lg rounded-xl bg-slate-900 p-8 shadow-xl">
-        <h1 className="text-3xl font-bold text-center text-white mb-8">
+    <div className="min-h-screen bg-background flex justify-center items-center transition-colors border-slate-300 dark:border-border">
+      <div className="w-full max-w-lg rounded-xl border border-border bg-card p-8 shadow-sm transition-colors">
+        <h1 className="text-3xl font-bold text-center text-foreground mb-8">
           Previous Year Papers
         </h1>
 
         <div className="space-y-5">
           <div>
-            <label className="text-gray-300">Session</label>
+            <label className="text-foreground">Session</label>
 
             <select
               value={session}
               onChange={(e) => setSession(e.target.value)}
-              className="mt-2 w-full rounded-lg border border-slate-700 bg-slate-800 p-3 text-white"
+              className="mt-2 w-full rounded-lg border border-border bg-background p-3 text-foreground"
             >
               {sessions.map((item) => (
                 <option key={item} value={item}>
@@ -77,25 +77,26 @@ function Papers() {
           </div>
 
           <div>
-            <label className="text-gray-300">Course</label>
+            <label className="text-foreground">Course</label>
 
             <select
               value={course}
               onChange={(e) => setCourse(e.target.value)}
-              className="mt-2 w-full rounded-lg border border-slate-700 bg-slate-800 p-3 text-white"
+              className="mt-2 w-full rounded-lg border border-border bg-background p-3 text-foreground"
             >
               <option>Diploma</option>
+              
             </select>
           </div>
 
           <div>
-            <label className="text-gray-300">Subject Code</label>
+            <label className="text-foreground">Subject Code</label>
 
             <input
               value={subjectCode}
               onChange={(e) => setSubjectCode(e.target.value)}
               placeholder="4320001"
-              className="mt-2 w-full rounded-lg border border-slate-700 bg-slate-800 p-3 text-white outline-none"
+              className="mt-2 w-full rounded-lg border border-slate-300 dark:border-border bg-background p-3 text-foreground outline-none"
             />
           </div>
 
@@ -106,6 +107,7 @@ function Papers() {
           >
             {loading ? "Searching..." : "Search Paper"}
           </button>
+          <p className = "textsize-small justify-center item-senter"> if you want another caurses paper to be available in this site email at : charizadpoki@gmail.com</p>
         </div>
       </div>
     </div>

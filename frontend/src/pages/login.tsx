@@ -15,6 +15,15 @@ function Login() {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!email.trim()) {
+      setError("Please enter your email.");
+      return;
+    }
+
+    if (!password.trim()) {
+      setError("Please enter your password.");
+      return;
+    }
 
     setLoading(true);
     setError("");
@@ -38,30 +47,33 @@ function Login() {
   };
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
-      <div className="w-full max-w-md rounded-2xl border border-border bg-card p-8 shadow-2xl shadow-black/40">
+      <div className="w-full max-w-md rounded-2xl border-2 border-gray-400 dark:border-gray-900 bg-card p-8 shadow-2xl shadow-black/40">
         <div className="flex justify-center">
           <div className="rounded-full bg-blue-600 p-4">
             <FaUserGraduate className="text-4xl text-white" />
           </div>
         </div>
 
-        <h1 className="mt-5 text-center text-3xl font-bold text-white">
+        <h1 className="mt-5 text-center text-3xl font-bold text-foreground">
           GTU AI Study Assistant
         </h1>
 
-        <p className="mt-2 text-center text-slate-400">Login to continue</p>
+        <p className="mt-2 text-center text-mute-foreground">
+          Login to continue
+        </p>
 
         <form className="mt-8" onSubmit={handleLogin}>
-          <label className="font-semibold text-white">Email</label>
+          <label className="font-semibold text-foreground">Email</label>
 
-          <div className="mt-2 flex items-center rounded-lg border border-slate-700 bg-slate-800/70 px-3 py-3">
-            <FiMail className="text-xl text-slate-400" />
+          <div className="mt-2 flex items-center rounded-lg border border-slate-300 dark:border-gray-700 bg-background px-3 py-3">
+            <FiMail className="text-xl text-mute-foreground" />
             <input
               type="email"
               placeholder="Enter your email"
-              className="ml-3 w-full outline-none"
+              className="ml-3 w-full bg-transparent text-foreground placeholder:text-muted-foreground outline-none"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              required
             />
           </div>
 
@@ -69,25 +81,26 @@ function Login() {
             Password
           </label>
 
-          <div className="mt-2 flex items-center rounded-lg border border-slate-700 bg-slate-800/70 px-3 py-3">
-            <FiLock className="text-xl text-slate-400" />
+          <div className="mt-2 flex items-center rounded-lg border border-slate-300 dark:border-gray-700 bg-background px-3 py-3">
+            <FiLock className="text-xl text-mute-foreground" />
             <input
               type="password"
               placeholder="Enter your password"
               className="ml-3 w-full outline-none"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              required
             />
           </div>
           {error && <p className="mt-2 text-sm text-red-400">{error}</p>}
 
           <div className="mt-5 flex items-center justify-between">
-            <label className="flex items-center gap-2 text-slate-300">
+            <label className="flex items-center gap-2 text-mute-foreground">
               <input type="checkbox" className="accent-blue-600" />
               Remember me
             </label>
 
-            <button type="button" className="text-blue-400 hover:underline">
+            <button type="button" className="text-blue-600 hover:underline">
               Forgot Password?
             </button>
           </div>
@@ -100,9 +113,9 @@ function Login() {
             {loading ? "Logging in..." : "Login"}
           </button>
 
-          <p className="mt-6 text-center text-slate-300">
+          <p className="mt-6 text-center text-mute-foreground">
             Don't have an account?
-            <Link to="/register" className="ml-2 text-blue-400 hover:underline">
+            <Link to="/register" className="ml-2 text-blue-600 hover:underline">
               Register
             </Link>
           </p>

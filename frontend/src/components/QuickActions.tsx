@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import {
   FileQuestion,
   FileText,
@@ -20,6 +21,7 @@ type QuickAction = {
 };
 
 const actions: QuickAction[] = [
+  
   {
     id: "ai-chat",
     title: "AI Chat",
@@ -28,11 +30,11 @@ const actions: QuickAction[] = [
     badge: "Minimal",
   },
   {
-    id: "mock-exam",
-    title: "Mock Exam",
-    description: "Practice with timed papers built from previous GTU exams.",
+    id: "GTU Exam Papers",
+    title: "Exam papers",
+    description: "Practice with papers built from previous GTU exams.",
     icon: FileText,
-    badge: "Minimal",
+    badge: "Search",
   },
   {
     id: "mcq-generator",
@@ -70,6 +72,7 @@ interface QuickActionsProps {
 }
 
 export function QuickActions({ activeId = "ai-chat", onSelect }: QuickActionsProps) {
+  const navigate = useNavigate();
   return (
     <section aria-label="Quick actions" className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
       {actions.map((action, index) => {
@@ -99,7 +102,12 @@ export function QuickActions({ activeId = "ai-chat", onSelect }: QuickActionsPro
             </div>
             <button
               type="button"
-              onClick={() => onSelect?.(action.id)}
+              onClick={() => {onSelect?.(action.id); 
+                if (action.id === "GTU Exam Papers") {
+                  navigate("/papers");
+                }
+              }}
+           
               className="mt-4 self-start rounded-lg border border-border px-3 py-1.5 text-xs font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
             >
               {action.badge}
