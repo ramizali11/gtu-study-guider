@@ -10,3 +10,15 @@ class UserCreate(BaseModel):
 class UserLogin(BaseModel):
     email: EmailStr
     password: str
+
+class PaperSearchRequest(BaseModel):
+    session: str
+    course: str
+    subject_code: str
+
+
+class PaperSearchRequest(BaseModel):
+
+    session: str
+    course: str
+    subject_code: str

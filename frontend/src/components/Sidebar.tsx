@@ -64,7 +64,7 @@ export function Sidebar({ activeItem = "dashboard", onNavigate, onClose }: Sideb
         >
           <item.icon
             className={cn(
-              "size-[18px] shrink-0 transition-transform group-hover:scale-110",
+              "size-4.5 shrink-0 transition-transform group-hover:scale-110",
               isActive && "text-sidebar-primary",
             )}
             aria-hidden="true"
@@ -80,7 +80,7 @@ export function Sidebar({ activeItem = "dashboard", onNavigate, onClose }: Sideb
       initial={{ opacity: 0, x: -16 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.35, ease: "easeOut" }}
-      className="flex h-full w-[264px] flex-col rounded-3xl border border-sidebar-border bg-sidebar p-4 shadow-float"
+      className="flex h-full w-66 flex-col rounded-3xl border border-sidebar-border bg-sidebar p-4 shadow-float"
     >
       <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-2">
         <div className="flex min-w-0 items-center gap-3 px-1 py-2">

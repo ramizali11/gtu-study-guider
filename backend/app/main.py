@@ -4,6 +4,8 @@ from app.models import User
 from app.routes.auth import router as auth_router
 from app.auth import hash_password
 from fastapi.middleware.cors import CORSMiddleware
+from app.routes import papers
+
 
 app = FastAPI(
     title="GTU AI Study Assistant API",
@@ -25,6 +27,7 @@ app.add_middleware( CORSMiddleware, allow_origins=["http://localhost:5173"], all
 
 
 app.include_router(auth_router)
+app.include_router(papers.router)
 
 @app.get("/")
 def home():

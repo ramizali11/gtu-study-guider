@@ -59,8 +59,8 @@ function Register() {
 
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-slate-950 px-4">
-      <div className="w-full max-w-md rounded-2xl border border-slate-800 bg-slate-900/90 p-8 shadow-2xl shadow-black/40">
+    <div className="flex min-h-screen items-center justify-center bg-background px-4">
+      <div className="w-full max-w-md rounded-2xl border border-border bg-card p-8 shadow-2xl shadow-black/40">
         <div className="flex justify-center">
           <div className="rounded-full bg-green-600 p-4">
             <FaUserGraduate className="text-4xl text-white" />

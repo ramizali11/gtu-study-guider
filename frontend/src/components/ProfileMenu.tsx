@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { ChevronDown, LogOut, Settings, User } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 interface ProfileMenuProps {
   name?: string;
@@ -11,9 +12,16 @@ interface ProfileMenuProps {
 export function ProfileMenu({ avatarUrl }: ProfileMenuProps) {
   const user = JSON.parse(localStorage.getItem("user") || "{}");
   const name = user.name || "Guest";
-  const email = user.email || "";
+  const email = user.email || "not given";
   const [open, setOpen] = useState(false);
   // TODO: Fetch the authenticated user profile from FastAPI
+  const navigate = useNavigate();
+  function handleLogout() {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    navigate("/login", { replace: true });
+    localStorage.clear();
+  }
 
   const initials = name
     .split(" ")
@@ -74,6 +82,7 @@ export function ProfileMenu({ avatarUrl }: ProfileMenuProps) {
                   <button
                     type="button"
                     role="menuitem"
+                    onClick={label === "Logout" ? handleLogout : undefined} 
                     className="flex w-full items-center gap-2 rounded-xl px-3 py-2 text-sm text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
                   >
                     <Icon className="size-4" aria-hidden="true" />

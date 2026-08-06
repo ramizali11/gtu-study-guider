@@ -24,7 +24,7 @@ export function Navbar({onOpenSidebar}: NavbarProps) {
         aria-label="Open navigation"
         className="grid size-10 shrink-0 place-items-center rounded-xl border border-border bg-card text-muted-foreground shadow-card lg:hidden dark:text-white"
       >
-        <Menu className="size-5" aria-hidden="true" />
+        <Menu className="size-5" aria-hidden="true" /> y
       </button>
 
       <div className="min-w-0">

@@ -30,7 +30,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white">
+    <div className="min-h-screen bg-background text-foreground">
       <div className="mx-auto flex max-w-375 gap-6 p-4 sm:p-6 ">
         <div className="sticky top-6 hidden h-[calc(100vh-3rem)] shrink-0 lg:block ">
           <Sidebar activeItem={activeItem} onNavigate={handleSidebarNavigation} />
