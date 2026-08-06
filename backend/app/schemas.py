@@ -16,9 +16,10 @@ class PaperSearchRequest(BaseModel):
     course: str
     subject_code: str
 
+class ForgotPasswordRequest(BaseModel):
+    email: EmailStr
 
-class PaperSearchRequest(BaseModel):
 
-    session: str
-    course: str
-    subject_code: str
+class ResetPasswordRequest(BaseModel):
+    token: str
+    password: str

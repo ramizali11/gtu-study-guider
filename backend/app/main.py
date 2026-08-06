@@ -5,6 +5,7 @@ from app.routes.auth import router as auth_router
 from app.auth import hash_password
 from fastapi.middleware.cors import CORSMiddleware
 from app.routes import papers
+from app.routes import password
 
 
 app = FastAPI(
@@ -28,6 +29,7 @@ app.add_middleware( CORSMiddleware, allow_origins=["http://localhost:5173"], all
 
 app.include_router(auth_router)
 app.include_router(papers.router)
+app.include_router(password.router)
 
 @app.get("/")
 def home():

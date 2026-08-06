@@ -1,5 +1,6 @@
 from datetime import datetime, timedelta
 from jose import jwt
+from passlib.context import CryptContext
 
 SECRET_KEY = "change-this-to-a-long-random-secret-key"
 ALGORITHM = "HS256"
@@ -14,3 +15,11 @@ def create_access_token(data: dict):
     to_encode.update({"exp": expire})
 
     return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
+
+pwd_context = CryptContext(
+    schemes=["bcrypt"],
+    deprecated="auto"
+)
+
+def hash_password(password: str):
+    return pwd_context.hash(password)
