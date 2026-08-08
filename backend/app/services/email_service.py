@@ -19,34 +19,51 @@ FROM_EMAIL = "GTU AI Study Assistant <onboarding@resend.dev>"
 
 
 def send_reset_email(email: str, link: str):
+      try:
+        message = EmailMessage()
 
-    resend.Emails.send({
+        message["From"] = SMTP_EMAIL
+        message["To"] = email
+        message["Subject"] = "Reset your Study Guider Password"
 
-        "from": "GTU AI Study Assistant <onboarding@resend.dev>",
+        message.set_content(
+            f"""
+Reset your Study Guider password
 
-        "to": email,
+Click the link below to reset your password:
 
-        "subject": "Reset your password",
+{link}
 
-        "html": f"""
-        <h2>Reset Password</h2>
+This link expires in 15 minutes.
 
-        <p>Click the button below.</p>
+If you did not request a password reset, you can safely ignore this email.
+"""
+        )
 
-        <a href="{link}"
-           style="
-             background:#2563eb;
-             color:white;
-             padding:12px 20px;
-             text-decoration:none;
-             border-radius:6px;">
-             Reset Password
-        </a>
+        # Because your function is currently synchronous,
+        # use the synchronous SMTP helper.
+        import smtplib
 
-        <p>This link expires in 15 minutes.</p>
-        """
-    })
+        with smtplib.SMTP("smtp.gmail.com", 587) as server:
+            server.starttls()
+            server.login(
+                SMTP_EMAIL,
+                SMTP_APP_PASSWORD
+            )
+            server.send_message(message)
 
+        print("RESET EMAIL SENT TO:", email)
+        return True
+
+      except Exception as e:
+        print(
+            "RESET EMAIL ERROR:",
+            type(e).__name__,
+            str(e)
+        )
+        return False
+
+   
 async def send_otp_email(email: str, otp: str):
     try:
         message = EmailMessage()
