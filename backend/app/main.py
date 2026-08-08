@@ -6,6 +6,8 @@ from app.auth import hash_password
 from fastapi.middleware.cors import CORSMiddleware
 from app.routes import papers
 from app.routes import password
+from app.models_otp import RegistrationOTP
+
 
 
 app = FastAPI(
