@@ -1,0 +1,94 @@
+from typing import List
+
+from fastapi import APIRouter, UploadFile, File, HTTPException
+
+from app.services.pdf_extractor import extract_pdf_text
+from app.services.question_ai import extract_questions_with_ai
+from app.services.question_validator import validate_questions
+
+
+router = APIRouter(
+    prefix="/important-questions",
+    tags=["Important Questions"],
+)
+
+
+@router.post("/upload")
+async def upload_question_papers(
+    files: List[UploadFile] = File(...)
+):
+    if not files:
+        raise HTTPException(
+            status_code=400,
+            detail="Please upload at least one PDF."
+        )
+
+    results = []
+
+    for file in files:
+
+        # Check filename
+        if not file.filename:
+            raise HTTPException(
+                status_code=400,
+                detail="Filename is missing."
+            )
+
+        # Check PDF
+        if not file.filename.lower().endswith(".pdf"):
+            raise HTTPException(
+                status_code=400,
+                detail=f"Only PDF files are allowed: {file.filename}"
+            )
+
+        # Read file
+        file_bytes = await file.read()
+
+        if not file_bytes:
+            raise HTTPException(
+                status_code=400,
+                detail=f"Uploaded PDF is empty: {file.filename}"
+            )
+
+        try:
+
+            # Extract PDF text
+            pdf_text = extract_pdf_text(file_bytes)
+
+            if not pdf_text.strip():
+                raise HTTPException(
+                    status_code=400,
+                    detail=f"Could not extract text from PDF: {file.filename}"
+                )
+
+            # Send text to AI
+            ai_result = extract_questions_with_ai(
+                pdf_text
+            )
+
+            # Validate AI result
+            questions = validate_questions(
+                ai_result
+            )
+
+            # Add result
+            results.append({
+                "filename": file.filename,
+                "question_count": len(questions),
+                "questions": questions,
+            })
+
+        except HTTPException:
+            raise
+
+        except Exception as e:
+
+            raise HTTPException(
+                status_code=500,
+                detail=f"Processing failed for {file.filename}: {str(e)}"
+            )
+
+    return {
+        "message": "Question papers processed successfully.",
+        "papers": results,
+    }
