@@ -1,6 +1,8 @@
 from typing import List
 
 from fastapi import APIRouter, UploadFile, File, HTTPException
+from app.services.important_questions_ai import find_important_questions
+import json
 
 from app.services.pdf_extractor import extract_pdf_text
 from app.services.question_ai import extract_questions_with_ai
@@ -23,6 +25,14 @@ async def upload_question_papers(
             detail="Please upload at least one PDF."
         )
 
+    if len(files) < 2:
+        raise HTTPException(
+            status_code=400,
+            detail="Please upload at least two PDF question papers to identify repeated important questions."
+        )
+
+    
+        
     results = []
 
     for file in files:
@@ -88,7 +98,23 @@ async def upload_question_papers(
                 detail=f"Processing failed for {file.filename}: {str(e)}"
             )
 
+
+    important_questions = find_important_questions(
+    results
+    )
+
+# Debug: see exactly what Gemini returned
+    print("\n========== IMPORTANT QUESTIONS AI RESULT ==========")
+    print(important_questions)
+    print("===================================================\n")
+
+    important_questions = important_questions.get(
+    "important_questions",
+    []
+    )
+
     return {
         "message": "Question papers processed successfully.",
         "papers": results,
+        "important_questions": important_questions,
     }

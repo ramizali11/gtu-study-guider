@@ -62,7 +62,7 @@ const actions: QuickAction[] = [
     title: "Important Questions",
     description: "Most repeated questions ranked by exam probability.",
     icon: FileQuestion,
-    badge: "Minimal",
+    badge: "Analyze",
   },
 ];
 
@@ -101,17 +101,25 @@ export function QuickActions({ activeId = "ai-chat", onSelect }: QuickActionsPro
               </div>
             </div>
             <button
+     
               type="button"
               onClick={() => {onSelect?.(action.id); 
                 if (action.id === "GTU Exam Papers") {
                   navigate("/papers");
                 }
+
+                if (action.id === "important-questions"){
+                   navigate("/imp_quastion");
+                }
               }}
-           
+          
+
               className="mt-4 self-start rounded-lg border border-border px-3 py-1.5 text-xs font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
             >
               {action.badge}
             </button>
+
+          
           </motion.article>
         );
       })}
