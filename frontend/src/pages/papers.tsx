@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Papers() {
   const [session, setSession] = useState("Winter 2025");
@@ -7,6 +8,7 @@ function Papers() {
   const [loading, setLoading] = useState(false);
 
   const currentYear = new Date().getFullYear();
+  const navigate = useNavigate();
 
   const sessions: string[] = [];
 
@@ -26,26 +28,21 @@ function Papers() {
     try {
       const newTab = window.open("", "_blank");
 
-      const response = await fetch(
-        "http://127.0.0.1:8000/papers/search",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            session,
-            course,
-            subject_code: subjectCode.trim(),
-          }),
+      const response = await fetch("http://127.0.0.1:8000/papers/search", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
-      );
+        body: JSON.stringify({
+          session,
+          course,
+          subject_code: subjectCode.trim(),
+        }),
+      });
 
       const data = await response.json();
 
       if (data.status === "success") {
-        console.log("PDF URL:", data.url);
-
         if (newTab) {
           newTab.location.href = data.url;
         }
@@ -74,9 +71,9 @@ function Papers() {
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div className="absolute -left-32 -top-32 h-96 w-96 rounded-full bg-blue-600/10 blur-[120px]" />
 
-        <div className="absolute right-[-120px] top-[20%] h-96 w-96 rounded-full bg-purple-600/10 blur-[120px]" />
+        <div className="absolute right-30gf top-[20%] h-96 w-96 rounded-full bg-purple-600/10 blur-[120px]" />
 
-        <div className="absolute bottom-[-150px] left-[30%] h-96 w-96 rounded-full bg-cyan-500/10 blur-[120px]" />
+        <div className="absolute bottom-37.5 left-[30%] h-96 w-96 rounded-full bg-cyan-500/10 blur-[120px]" />
       </div>
 
       {/* ================= MAIN ================= */}
@@ -85,10 +82,16 @@ function Papers() {
         {/* ================= HEADER ================= */}
 
         <div className="mb-8 text-center">
+          <button
+            onClick={() => navigate("/dashboard")}
+            className="mb-6 flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white shadow-lg shadow-blue-600/20 transition hover:bg-blue-500"
+          >
+            ← Dashboard
+          </button>
           {/* Logo */}
 
           <div className="mb-5 flex justify-center">
-            <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500 to-purple-600 text-3xl shadow-xl shadow-blue-500/20">
+            <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-linear-to-br from-blue-500 to-purple-600 text-3xl shadow-xl shadow-blue-500/20">
               🎓
             </div>
           </div>
@@ -161,9 +164,7 @@ function Papers() {
               {/* ================= COURSE ================= */}
 
               <div>
-                <label className="mb-2 block text-sm font-medium">
-                  Course
-                </label>
+                <label className="mb-2 block text-sm font-medium">Course</label>
 
                 <div className="relative">
                   <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-lg">
@@ -227,15 +228,12 @@ function Papers() {
                 {loading ? (
                   <>
                     <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" />
-
                     Searching GTU papers...
                   </>
                 ) : (
                   <>
                     <span className="text-lg">🔍</span>
-
                     Search Paper
-
                     <span className="transition-transform group-hover:translate-x-1">
                       →
                     </span>
@@ -251,9 +249,7 @@ function Papers() {
                 <span className="text-lg">💡</span>
 
                 <div>
-                  <p className="text-sm font-medium">
-                    Quick tip
-                  </p>
+                  <p className="text-sm font-medium">Quick tip</p>
 
                   <p className="mt-1 text-xs leading-5 text-muted-foreground">
                     You can find the subject code on your GTU syllabus,
@@ -269,9 +265,7 @@ function Papers() {
           <div className="mt-5 rounded-2xl border border-border bg-card/50 p-5 text-center backdrop-blur-xl">
             <div className="mb-2 text-xl">📩</div>
 
-            <p className="text-sm font-medium">
-              Can't find your paper?
-            </p>
+            <p className="text-sm font-medium">Can't find your paper?</p>
 
             <p className="mt-1 text-xs leading-5 text-muted-foreground">
               If you want another course or subject paper to be available on
@@ -292,9 +286,7 @@ function Papers() {
             <div className="rounded-2xl border border-border bg-card/40 p-4 text-center backdrop-blur">
               <div className="mb-2 text-xl">1️⃣</div>
 
-              <p className="text-xs font-semibold">
-                Select session
-              </p>
+              <p className="text-xs font-semibold">Select session</p>
 
               <p className="mt-1 text-[11px] text-muted-foreground">
                 Choose Winter or Summer
@@ -304,9 +296,7 @@ function Papers() {
             <div className="rounded-2xl border border-border bg-card/40 p-4 text-center backdrop-blur">
               <div className="mb-2 text-xl">2️⃣</div>
 
-              <p className="text-xs font-semibold">
-                Enter subject
-              </p>
+              <p className="text-xs font-semibold">Enter subject</p>
 
               <p className="mt-1 text-[11px] text-muted-foreground">
                 Enter your GTU code
@@ -316,9 +306,7 @@ function Papers() {
             <div className="rounded-2xl border border-border bg-card/40 p-4 text-center backdrop-blur">
               <div className="mb-2 text-xl">3️⃣</div>
 
-              <p className="text-xs font-semibold">
-                Get paper
-              </p>
+              <p className="text-xs font-semibold">Get paper</p>
 
               <p className="mt-1 text-[11px] text-muted-foreground">
                 Open your PDF instantly

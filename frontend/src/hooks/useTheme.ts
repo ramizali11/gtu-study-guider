@@ -4,24 +4,66 @@ export type Theme = "light" | "dark";
 
 const STORAGE_KEY = "gtu-ai-theme";
 
-/** Reads, applies and persists the color theme by toggling the `dark` class. */
+function getStoredTheme(): Theme {
+  if (typeof window === "undefined") {
+    return "light";
+  }
+
+  const stored = localStorage.getItem(STORAGE_KEY);
+
+  if (stored === "dark" || stored === "light") {
+    return stored;
+  }
+
+  return "light";
+}
+
 export function useTheme() {
-  const [theme, setTheme] = useState<Theme>("light");
+  const [theme, setTheme] = useState<Theme>(getStoredTheme);
 
+  // IMPORTANT:
+  // Apply the saved theme whenever the app starts.
   useEffect(() => {
-    const stored = window.localStorage.getItem(STORAGE_KEY) as Theme | null;
-    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    setTheme(stored ?? (prefersDark ? "dark" : "light"));
+    const savedTheme = getStoredTheme();
+
+    setTheme(savedTheme);
+
+    document.documentElement.classList.remove("light", "dark");
+    document.documentElement.classList.add(savedTheme);
+
+    document.documentElement.style.colorScheme = savedTheme;
+
+    console.log("THEME INITIALIZED:", savedTheme);
+    console.log(
+      "HTML CLASS:",
+      document.documentElement.className
+    );
   }, []);
-
-  useEffect(() => {
-    document.documentElement.classList.toggle("dark", theme === "dark");
-    window.localStorage.setItem(STORAGE_KEY, theme);
-  }, [theme]);
 
   const toggleTheme = useCallback(() => {
-    setTheme((current) => (current === "dark" ? "light" : "dark"));
+    setTheme((currentTheme) => {
+      const nextTheme =
+        currentTheme === "dark" ? "light" : "dark";
+
+      document.documentElement.classList.remove("light", "dark");
+      document.documentElement.classList.add(nextTheme);
+
+      document.documentElement.style.colorScheme = nextTheme;
+
+      localStorage.setItem(STORAGE_KEY, nextTheme);
+
+      console.log("THEME CHANGED:", nextTheme);
+      console.log(
+        "HTML CLASS:",
+        document.documentElement.className
+      );
+
+      return nextTheme;
+    });
   }, []);
 
-  return { theme, toggleTheme };
+  return {
+    theme,
+    toggleTheme,
+  };
 }

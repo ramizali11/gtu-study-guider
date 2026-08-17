@@ -10,8 +10,6 @@ load_dotenv(BASE_DIR / ".env")
 
 SECRET_KEY = os.getenv("JWT_SECRET_KEY")
 
-print("SECRET_KEY =", SECRET_KEY)
-
 def create_reset_token(email: str):
     payload = {
         "email": email,

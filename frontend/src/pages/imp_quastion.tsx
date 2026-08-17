@@ -1,5 +1,7 @@
 import { useMemo, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
 
 interface ImportantQuestion {
   question: string;
@@ -21,6 +23,7 @@ export default function ImportantQuestions() {
   const [questions, setQuestions] = useState<ImportantQuestion[]>([]);
   const [paperCount, setPaperCount] = useState(0);
   const [totalQuestions, setTotalQuestions] = useState(0);
+  const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
   const [dragging, setDragging] = useState(false);
@@ -110,8 +113,7 @@ export default function ImportantQuestions() {
         ) || 0;
 
       setTotalQuestions(questionTotal);
-
-      console.log("IMPORTANT QUESTIONS:", data.important_questions);
+    
     } catch (err) {
       console.error("PDF processing error:", err);
 
@@ -169,7 +171,7 @@ export default function ImportantQuestions() {
   };
 
   return (
-    <div className="min-h-screen bg-[#070b14] text-white">
+    <div className="min-h-screen bg-background text-foreground transition-colors duration-300">
       {/* Background glow */}
       <div className="pointer-events-none fixed inset-0 overflow-hidden">
         <div className="absolute left-30 top-30 h-100 w-100 rounded-full bg-blue-600/10 blur-[120px]" />
@@ -182,6 +184,12 @@ export default function ImportantQuestions() {
       <div className="relative mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
         {/* Header */}
         <header className="mb-10">
+       <button
+            onClick={() => navigate("/dashboard")}
+            className="mb-6 flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white shadow-lg shadow-blue-600/20 transition hover:bg-blue-500"
+          >
+            ← Dashboard
+          </button>
           <div className="mb-4 flex items-center gap-3">
             <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-linear-to-br from-blue-500 to-purple-600 shadow-lg shadow-blue-500/20">
               <span className="text-xl">🎓</span>
@@ -206,7 +214,7 @@ export default function ImportantQuestions() {
 
         {/* Upload section */}
         <section className="mb-8">
-          <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-5 shadow-2xl backdrop-blur-xl sm:p-7">
+          <div className="rounded-3xl border border-border bg-card p-5 shadow-2xl backdrop-blur-xl sm:p-7">
           <div>
 
             <label
@@ -220,7 +228,7 @@ export default function ImportantQuestions() {
               className={`relative flex min-h-65 flex-col items-center justify-center rounded-2xl border-2 border-dashed p-8 text-center transition-all ${
                 dragging
                 ? "border-blue-400 bg-blue-500/10"
-                : "border-white/10 bg-black/10 hover:border-blue-500/40 hover:bg-blue-500/3"
+                : "border-border bg-background hover:border-blue-500/40 hover:bg-blue-500/5"
               }`}
               >
               <input
@@ -240,14 +248,14 @@ export default function ImportantQuestions() {
                   Upload GTU question papers
                 </h2>
 
-                <p className="mb-4 text-sm text-slate-400">
+                <p className="mb-4 text-sm text-muted-foreground">
                   Drag & drop your PDFs here or{" "}
                   <span className="font-medium text-blue-400">
                     browse files
                   </span>
                 </p>
 
-                <p className="text-xs text-slate-500">
+                <p className="text-xs text-muted-foreground">
                   You can upload multiple PDF papers at once.
                 </p>
             </label>
@@ -283,7 +291,7 @@ export default function ImportantQuestions() {
             {files.length > 0 && (
               <div className="mt-5">
                 <div className="mb-3 flex items-center justify-between">
-                  <p className="text-sm font-semibold text-slate-200">
+                  <p className="text-sm font-semibold text-foreground">
                     Selected papers ({files.length})
                   </p>
 
@@ -299,7 +307,7 @@ export default function ImportantQuestions() {
                   {files.map((file, index) => (
                     <div
                       key={`${file.name}-${index}`}
-                      className="flex items-center justify-between rounded-xl border border-white/5 bg-black/20 px-4 py-3"
+                      className="flex items-center justify-between rounded-xl border border-border bg-background px-4 py-3"
                     >
                       <div className="flex min-w-0 items-center gap-3">
                         <div className="rounded-lg bg-red-500/10 px-2 py-2">
@@ -307,7 +315,7 @@ export default function ImportantQuestions() {
                         </div>
 
                         <div className="min-w-0">
-                          <p className="truncate text-sm font-medium text-slate-200">
+                          <p className="truncate text-sm font-medium text-foreground">
                             {file.name}
                           </p>
 
@@ -378,7 +386,7 @@ export default function ImportantQuestions() {
           <section>
             {/* Stats */}
             <div className="mb-7 grid gap-4 sm:grid-cols-3">
-              <div className="rounded-2xl border border-white/10 bg-white/[0.035] p-5 backdrop-blur-xl">
+              <div className="rounded-2xl border border-border bg-card p-5 backdrop-blur-xl">
                 <p className="text-xs font-medium uppercase tracking-wider text-slate-500">
                   Papers analyzed
                 </p>
@@ -386,7 +394,7 @@ export default function ImportantQuestions() {
                 <p className="mt-2 text-3xl font-bold">{paperCount}</p>
               </div>
 
-              <div className="rounded-2xl border border-white/10 bg-white/[0.035] p-5 backdrop-blur-xl">
+              <div className="rounded-2xl border border-border bg-card p-5 backdrop-blur-xl">
                 <p className="text-xs font-medium uppercase tracking-wider text-slate-500">
                   Questions scanned
                 </p>
@@ -428,7 +436,7 @@ export default function ImportantQuestions() {
                   value={search}
                   onChange={(event) => setSearch(event.target.value)}
                   placeholder="Search questions..."
-                  className="w-full rounded-xl border border-white/10 bg-white/4 py-2.5 pl-10 pr-4 text-sm text-white outline-none transition placeholder:text-slate-600 focus:border-blue-500/50"
+                  className="w-full rounded-xl border border-border bg-background py-2.5 pl-10 pr-4 text-sm text-foreground outline-none transition placeholder:text-muted-foreground focus:border-blue-500/50"
                 />
               </div>
             </div>
@@ -442,7 +450,7 @@ export default function ImportantQuestions() {
                   return (
                     <div
                       key={`${item.question}-${index}`}
-                      className="group rounded-2xl border border-white/10 bg-white/[0.035] p-5 transition-all duration-200 hover:-translate-y-0.5 hover:border-blue-500/30 hover:bg-white/5.5 hover:shadow-xl hover:shadow-blue-500/5 sm:p-6"
+                     className="group rounded-2xl border border-border bg-card p-5 transition-all duration-200 hover:-translate-y-0.5 hover:border-blue-500/30 hover:bg-accent hover:shadow-xl hover:shadow-blue-500/5 sm:p-6"
                     >
                       <div className="flex gap-4">
                         <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-linear-to-br from-blue-500/20 to-purple-500/20 text-sm font-bold text-blue-300">
@@ -459,14 +467,14 @@ export default function ImportantQuestions() {
 
                             <span className="rounded-full border border-white/10 bg-white/3 px-2.5 py-1 text-[11px] font-medium text-slate-400">
                               Repeated in{" "}
-                              <span className="text-white">
+                              <span className="text-foreground">
                                 {item.frequency}
                               </span>{" "}
                               papers
                             </span>
                           </div>
 
-                          <h3 className="text-base font-medium leading-7 text-slate-100 sm:text-lg">
+                          <h3 className="text-base font-medium leading-7 text-card-foreground sm:text-lg">
                             {item.question}
                           </h3>
                         </div>
@@ -484,7 +492,7 @@ export default function ImportantQuestions() {
                 })}
               </div>
             ) : (
-              <div className="rounded-2xl border border-white/10 bg-white/[0.035] p-10 text-center">
+              <div className="rounded-2xl border border-border bg-card p-10 text-center">
                 <div className="mb-3 text-3xl">🔍</div>
 
                 <p className="font-medium">No matching questions</p>
@@ -500,7 +508,7 @@ export default function ImportantQuestions() {
         {/* Empty state */}
         {!loading && files.length === 0 && questions.length === 0 && (
           <div className="mt-10 text-center">
-            <p className="text-sm text-slate-600">
+            <p className="text-sm text-muted-foreground">
               Upload previous GTU papers to discover frequently repeated
               questions.
             </p>

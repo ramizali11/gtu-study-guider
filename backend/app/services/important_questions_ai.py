@@ -19,13 +19,7 @@ MODEL_NAME = "gemini-3.5-flash-lite"
 
 def find_important_questions(results):
 
-    print("\n========== RESULTS RECEIVED BY AI FUNCTION ==========")
-    print(json.dumps(results, indent=2, ensure_ascii=False))
-    print("=====================================================")
 
-    # ---------------------------------------------------------
-    # Prepare clean input for Gemini
-    # ---------------------------------------------------------
 
     papers_data = []
 
@@ -46,18 +40,6 @@ def find_important_questions(results):
             "filename": filename,
             "questions": questions
         })
-
-    print("\n========== DATA SENT TO GEMINI ==========")
-    print(json.dumps(
-        papers_data,
-        indent=2,
-        ensure_ascii=False
-    ))
-    print("=========================================")
-
-    # ---------------------------------------------------------
-    # Gemini prompt
-    # ---------------------------------------------------------
 
     prompt = """
 You are an expert GTU Diploma examination question-paper
@@ -437,22 +419,10 @@ PAPERS_PLACEHOLDER
         )
     )
 
-    # ---------------------------------------------------------
-    # Call Gemini
-    # ---------------------------------------------------------
-
     response = client.models.generate_content(
         model=MODEL_NAME,
         contents=prompt,
     )
-
-    print("\n========== GEMINI RESPONSE ==========")
-    print(response.text)
-    print("=====================================")
-
-    # ---------------------------------------------------------
-    # Parse Gemini response
-    # ---------------------------------------------------------
 
     text = response.text.strip()
 
@@ -466,10 +436,6 @@ PAPERS_PLACEHOLDER
         result = json.loads(text)
 
     except json.JSONDecodeError as e:
-
-        print("\n========== GEMINI JSON ERROR ==========")
-        print(text)
-        print("=======================================")
 
         raise ValueError(
             f"Gemini returned invalid JSON: {str(e)}"

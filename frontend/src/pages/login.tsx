@@ -36,6 +36,8 @@ function Login() {
 
       localStorage.setItem("user", JSON.stringify(response.data.user));
       localStorage.setItem("token", response.data.access_token);
+      console.log("TOKEN FROM LOGIN:", response.data.access_token);
+      console.log("TOKEN IN STORAGE:", localStorage.getItem("token"));
 
       // Go directly to the dashboard
       navigate("/dashboard");

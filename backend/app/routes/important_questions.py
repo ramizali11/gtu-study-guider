@@ -103,10 +103,6 @@ async def upload_question_papers(
     results
     )
 
-# Debug: see exactly what Gemini returned
-    print("\n========== IMPORTANT QUESTIONS AI RESULT ==========")
-    print(important_questions)
-    print("===================================================\n")
 
     important_questions = important_questions.get(
     "important_questions",
